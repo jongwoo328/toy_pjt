@@ -14,14 +14,12 @@ def index(request):
     if request.method == "POST":
         print(request.POST)
         form = HotdealForm(request.POST)
-        key = request.POST['key'][0]
-        target = request.POST['target'][0]
-        data = get_fmk(key=key, target=target)
+        key = request.POST['key']
+        target = request.POST['target']
+        datas = get_fmk(key=key, target=target)
         context = {
             'form': form,
-            'title_list': data["title_list"],
-            'price_list': data["price_list"],
-            'link_list': data["link_list"],
+            'datas': datas,
         }
         return render(request, 'hotdealapp/index.html', context)
     else:
