@@ -12,7 +12,6 @@ from .data import get_fmk
 def index(request):
     # 데이터 불러올 로직
     if request.method == "POST":
-        print(request.POST)
         form = HotdealForm(request.POST)
         key = request.POST['key']
         target = request.POST['target']
