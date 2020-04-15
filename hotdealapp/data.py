@@ -20,7 +20,7 @@ def get_fmk(target="title_content", key="만두"):
     keyword = key
     target = target
 
-    url = base_url + f"search_keyword={keyword}&" + f"search_target={target}"
+    url = "{}search_keyword={}&search_target={}".format(base_url, keyword, target)
     request = requests.get(url)
     parsed_data = BeautifulSoup(request.text, "html.parser")
 
@@ -28,7 +28,7 @@ def get_fmk(target="title_content", key="만두"):
     title_list = map(get_title_fmk, title_list)
     
     link_list = parsed_data.select("h3 > a")
-    link_list = map(lambda x:fmk_base_url + f"{x.attrs['href']}", link_list)
+    link_list = map(lambda x:fmk_base_url + "{}".format(x.attrs['href']), link_list)
 
     price_list = parsed_data.select("#bd_1196365581_0 > div > div.fm_best_widget._bd_pc > ul > li > div > div.hotdeal_info > span:nth-child(2)")
     price_list = map(lambda x: (x.text)[4:], price_list)
@@ -40,5 +40,3 @@ def get_fmk(target="title_content", key="만두"):
     }
 
     return context
-
-get_fmk()

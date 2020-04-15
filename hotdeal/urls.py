@@ -18,7 +18,7 @@ from django.urls import path, include
 from hotdealapp import views
 
 urlpatterns = [
-    path('', views.index)
+    path('', views.index),
     path('admin/', admin.site.urls),
     path('hotdealapp/', include('hotdealapp.urls'),)
 ]

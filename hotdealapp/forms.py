@@ -14,4 +14,4 @@ class HotdealForm(forms.ModelForm):
     )
     class Meta:
         model = Hotdeal
-        fields = ('key, target')
+        fields = '__all__'
