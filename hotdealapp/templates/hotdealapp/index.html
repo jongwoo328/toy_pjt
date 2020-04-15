@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" method="post">
+    {{ form }}
+    <button>검색</button>
+</form>
+<table>
+    {% if data != None %}
+    {{ data }}
+    {% endif %}
+</table>
+{% endblock %}
