@@ -12,13 +12,16 @@ from .data import get_fmk
 def index(request):
     # 데이터 불러올 로직
     if request.method == "POST":
+        print(request.POST)
         form = HotdealForm(request.POST)
-        key = request.POST.key
-        target = request.POST.target
+        key = request.POST['key'][0]
+        target = request.POST['target'][0]
         data = get_fmk(key=key, target=target)
         context = {
             'form': form,
-            'data': data
+            'title_list': data["title_list"],
+            'price_list': data["price_list"],
+            'link_list': data["link_list"],
         }
         return render(request, 'hotdealapp/index.html', context)
     else:
@@ -26,6 +29,5 @@ def index(request):
     # 핫딜데이터 (이름, url, 가격, 쇼핑몰 정보 보유)
         context = {
             'form': form,
-            'data': None
         }
     return render(request, 'hotdealapp/index.html', context)

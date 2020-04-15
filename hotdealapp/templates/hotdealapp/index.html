@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <form action="" method="post">
+    {% csrf_token %}
     {{ form }}
     <button>검색</button>
 </form>
 <table>
-    {% if data != None %}
-    {{ data }}
-    {% endif %}
+    {{ title_list }}
+    {{ price_list }}
+    {{ link_list }}
 </table>
 {% endblock %}

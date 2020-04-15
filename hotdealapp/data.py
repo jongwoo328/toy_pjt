@@ -34,9 +34,9 @@ def get_fmk(target="title_content", key="만두"):
     price_list = map(lambda x: (x.text)[4:], price_list)
     
     context = {
-        "title_list": title_list,
-        "link_list": link_list,
-        "price_list": price_list,
+        "title_list": list(title_list),
+        "link_list": list(link_list),
+        "price_list": list(price_list),
     }
 
     return context
