@@ -47,15 +47,15 @@ def get_fmk(target="title_content", key="만두"):
     today_date = datetime.today()
     
     for index, title in enumerate(title_list):
-        # if title.attrs["class"][0] == "hotdeal_var8":
-        try:
-            article_date = today_date - datetime.strptime(date_list[index], "%Y.%m.%d")
-            
-        except ValueError:
-            article_date = today_date - today_date
-            valid_title_idx.append(index)
-        if article_date < timedelta(days=days_delta):
-            valid_title_idx.append(index)
+        if title.attrs["class"][0] == "hotdeal_var8":
+            try:
+                article_date = today_date - datetime.strptime(date_list[index], "%Y.%m.%d")
+                
+            except ValueError:
+                article_date = today_date - today_date
+                valid_title_idx.append(index)
+            if article_date < timedelta(days=days_delta):
+                valid_title_idx.append(index)
     title_list = list(map(get_title_fmk, title_list))
     
     # link_list 만들기
