@@ -6,8 +6,12 @@ fmk_base_url = "https://www.fmkorea.com"
 
 
 def get_title_fmk(title):
-    # return title
-    return str(title.text).strip()[:len(title)-6]
+    title = str(title.text)
+    for i in range(len(title)-1, -1, -1):
+        if title[i] == "[":
+            idx = i
+            break
+    return title[:i].strip()
 
 def get_article_id_fmk(url):
     url = url.attrs["href"]
@@ -53,7 +57,7 @@ def get_fmk(target="title_content", key="만두"):
                 
             except ValueError:
                 article_date = today_date - today_date
-                valid_title_idx.append(index)
+
             if article_date < timedelta(days=days_delta):
                 valid_title_idx.append(index)
     title_list = list(map(get_title_fmk, title_list))
