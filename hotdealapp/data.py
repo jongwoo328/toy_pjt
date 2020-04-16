@@ -25,7 +25,7 @@ def get_fmk(target="title_content", key="만두"):
         default = 만두
     '''
 
-    days_delta = 20
+    days_delta = 5
     
     base_url = "https://www.fmkorea.com/?vid=&mid=hotdeal&category=&listStyle=webzine&"
     keyword = key
@@ -37,7 +37,6 @@ def get_fmk(target="title_content", key="만두"):
     parsed_data = BeautifulSoup(request.text, "html.parser")
 
     # date_list 만들기
-    #bd_1196365581_0 > div > div.fm_best_widget._bd_pc > ul > li:nth-child(4) > div > div:nth-child(4) > span.regdate
     date_list = parsed_data.select("#bd_1196365581_0 > div > div.fm_best_widget._bd_pc > ul > li > div > div:last-child > span.regdate")
     date_list = list(map(lambda x: x.text.strip(), date_list))
 
@@ -46,10 +45,6 @@ def get_fmk(target="title_content", key="만두"):
     title_list = parsed_data.select("#bd_1196365581_0 > div > div.fm_best_widget._bd_pc > ul > li > div > h3 > a")
     
     today_date = datetime.today()
-    # print(
-    #     today_date - datetime.strptime(date_list[0], "%Y.%m.%d"),
-    #     timedelta(days=5)
-    # )
     
     for index, title in enumerate(title_list):
         # if title.attrs["class"][0] == "hotdeal_var8":
@@ -68,7 +63,6 @@ def get_fmk(target="title_content", key="만두"):
     link_list = list(map(get_article_id_fmk, link_list))
 
     # price_list 만들기
-    #bd_1196365581_0 > div > div.fm_best_widget._bd_pc > ul > li:nth-child(4) > div > div.hotdeal_info > span:nth-child(2) > a
     price_list = parsed_data.select("#bd_1196365581_0 > div > div.fm_best_widget._bd_pc > ul > li > div > div.hotdeal_info > span:nth-child(2) > a")
     price_list = list(map(lambda x: (x.text), price_list))
     
