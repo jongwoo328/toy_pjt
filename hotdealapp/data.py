@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import requests
 import time
 
-from apikey import get_weather_api_id
+from . import apikey
 
 
 fmk_base_url = "https://www.fmkorea.com"
@@ -158,13 +158,13 @@ def get_ppmp(target=2, key="만두"):
     return result
 
 def weather():
-    weather_url = f'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid={get_weather_api_id()}&lang=kr'
+    weather_url = f'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid={apikey.get_weather_api_id()}&lang=kr'
     response = requests.get(weather_url).json()
     current = response.get('current')
     # 현재 온도
     current_temp = current.get('temp') - 273.15
     # 현재 날씨 ex) "Clear" "Clounds" "Rain" "Snow"
-    current_weather = current.get('weather')[0].get('main')
+    current_weather = current.get('weather')[0].get('icon')
     current_clouds = current.get('clouds')
     current_time = time.strftime("%H:%M:%S", time.gmtime(current.get('dt') + 32400))
 
@@ -173,27 +173,29 @@ def weather():
     hourly_datas = []
     for i in range(3, 25, 3):
         # 기온, 날씨, 구름양, 시간
-        hourly_datas += [hourly[i].get('temp') - 273.15, hourly[i].get('weather')[0].get('main'), hourly[i].get('clouds'), time.strftime("%H:%M:%S", time.gmtime(hourly[i].get('dt') + 32400))]
+        hourly_datas += [hourly[i].get('temp') - 273.15, hourly[i].get('weather')[0].get('icon'), hourly[i].get('clouds'), time.strftime("%H:%M:%S", time.gmtime(hourly[i].get('dt') + 32400))]
     result = []
     for i in range(0, len(hourly_datas), 4):
         result.append({
-            "temp": hourly_datas[i],
+            "temp": round(hourly_datas[i], 1),
             "weather": hourly_datas[i+1],
             "clouds": hourly_datas[i+2],
-            "time": hourly_datas[i+3],
+            "time": hourly_datas[i+3][:5],
         })
     # 하루
     daily = response.get('daily')
-    # 하루의 최저기온, 최고기온
+    # 하루의 최저기온, 최고기온z
     daily_data = [daily[0].get('temp').get('min') - 273.15, daily[0].get('temp').get('max') - 273.15]
     dict_weather = {
-        'current_weather': current.get('weather')[0].get('main'),
-        'current_clouds': current.get('clouds'),
-        'current_time': time.strftime("%H:%M:%S", time.gmtime(current.get('dt') + 32400)),
-        'daily_min': daily[0].get('temp').get('min') - 273.15,
-        'daily_max': daily[0].get('temp').get('max') - 273.15,
+        'current_temp': round(current_temp, 1),
+        'current_weather': current_weather,
+        'current_clouds': current_clouds,
+        'current_time': current_time,
+        'daily_min': round(daily[0].get('temp').get('min') - 273.15, 1),
+        'daily_max': round(daily[0].get('temp').get('max') - 273.15, 1),
         'hourly_datas': result
     }
+
     return dict_weather
 
 weather()

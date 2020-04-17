@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import HotdealForm
-from .data import get_fmk, get_ppmp
+from .data import get_fmk, get_ppmp, weather
 
 # import time
 # t = time.localtime()
@@ -28,8 +28,11 @@ def index(request):
     else:
         form = HotdealForm()
     # 핫딜데이터 (이름, url, 가격, 쇼핑몰 정보 보유)
+    weather_data = weather()
     context = {
         'form': form,
         'datas': None,
+        'weather': weather_data,
     }
+    print(weather_data)
     return render(request, 'hotdealapp/index.html', context)
