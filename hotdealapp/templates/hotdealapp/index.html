@@ -12,25 +12,47 @@
     <div class="row flex-row">
         <section class="col">
             <a href="https://www.fmkorea.com/?vid=&mid=hotdeal" target="_blank">
+                <!-- 512 250 -->
                 <img src="{% static 'images/fmk_logo.png' %}" alt="fm korea logo" class="d-block w-100 border">
             </a>
             {% if datas != None %}
-            {% for data in datas %}
+            {% for data in fmk_datas %}
             <div class="card my-2">
-                <h5 class="card-header">{{ data.price }}</h5>
+                <div class="w-100" style="background-color: #508cef; height:5px"></div>
+                <!-- <h5 class="card-header" style="background-color: #508cef;"></h5> -->
                 <div class="card-body">
-                    <h5 class="card-title">{{ data.title }}</h5>
+                    <h5 class="card-title">{{ data.title }} {{ data.price }}</h5>
                     <p class="card-text">{{ data.date }}</p>
-                    <a href="{{ data.link }}" class="btn btn-primary d-block" target="_blank">바로가기</a>
+                    <a href="{{ data.link }}" class="btn d-block text-white" target="_blank" style="background-color: #495057;">바로가기</a>
                 </div>
             </div>
             {% empty %}
             <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
             {% endfor %}
             {% endif %}
+        
         </section>
+    
+        
         <section class="col">
-
+            <a href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu" target="_blank">
+                <img src="{% static 'images/ppmp_logo2.png' %}" alt="ppomppu logo" class="d-block w-100 border">
+            </a>
+            {% if datas != None %}
+            {% for data in ppmp_datas %}
+            <div class="card my-2">
+                <div class="w-100" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); height:5px;"></div>
+                <!-- <h5 class="card-header" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080);"></h5> -->
+                <div class="card-body ">
+                    <h5 class="card-title">{{ data.title }}</h5>
+                    <p class="card-text">{{ data.date }}</p>
+                    <a href="{{ data.link }}" class="btn d-block text-white" target="_blank" style="background-color: #495057;">바로가기</a>
+                </div>
+            </div>
+            {% empty %}
+            <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
+            {% endfor %}
+            {% endif %}
         </section>
         <section class="col">
 

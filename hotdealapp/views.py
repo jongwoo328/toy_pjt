@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import HotdealForm
-from .data import get_fmk
+from .data import get_fmk, get_ppmp
 
 # import time
 # t = time.localtime()
@@ -16,10 +16,13 @@ def index(request):
         if form.is_valid():
             key = request.POST['key']
             target = request.POST['target']
-            datas = get_fmk(key=key, target=target)
+            fmk_datas = get_fmk(key=key, target=target)
+            ppmp_datas = get_ppmp(key=key, target=target)
             context = {
                 'form': form,
-                'datas': datas,
+                'datas': 1,
+                'fmk_datas': fmk_datas,
+                'ppmp_datas': ppmp_datas,
             }
             return render(request, 'hotdealapp/index.html', context)
     else:
