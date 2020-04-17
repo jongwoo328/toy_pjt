@@ -1,6 +1,10 @@
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
+import time
+
+from apikey import get_weather_api_id
+
 
 fmk_base_url = "https://www.fmkorea.com"
 ppmp_base_url = "http://www.ppomppu.co.kr/zboard/"
@@ -154,7 +158,7 @@ def get_ppmp(target=2, key="만두"):
     return result
 
 def weather():
-    weather_url = 'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid=dc6fd7a40851c1bddcb20eea52f18325&lang=kr'
+    weather_url = f'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid={get_weather_api_id()}&lang=kr'
     response = requests.get(weather_url).json()
     current = response.get('current')
     # 현재 온도
@@ -191,3 +195,5 @@ def weather():
         'hourly_datas': result
     }
     return dict_weather
+
+weather()
