@@ -1,7 +1,7 @@
 from django import forms
 from .models import Hotdeal
 
-Choice = (("title", "제목"), ("content", "내용"), ("title_content", "제목 + 내용"))
+Choice = ((1, "제목"), (2, "내용"), (3, "제목 + 내용"))
 
 class HotdealForm(forms.ModelForm):
     
