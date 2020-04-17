@@ -19,12 +19,12 @@ def get_article_id_fmk(url):
     result = result[1].split("&")[0]
     return fmk_base_url + "/" + result
 
-def get_fmk(target="title_content", key="만두"):
+def get_fmk(target=3, key="만두"):
     '''
     target : 검색범위
-        title_content : 제목 + 내용 (default)
-        title : 제목
-        content : 내용
+        3 = title_content : 제목 + 내용 (default)
+        1 = title : 제목
+        2 = content : 내용
     key : 검색어
         default = 만두
     '''
@@ -33,7 +33,14 @@ def get_fmk(target="title_content", key="만두"):
     
     base_url = "https://www.fmkorea.com/?vid=&mid=hotdeal&category=&listStyle=webzine&"
     keyword = key
-    target = target
+    if target == 3:
+        target = "title_content"
+    elif target == 1:
+        target = "title"
+    elif target == 2:
+        target = "content"
+    else:
+        target = "title_content"
 
     # html parsing
     url = "{}search_keyword={}&search_target={}".format(base_url, keyword, target)
