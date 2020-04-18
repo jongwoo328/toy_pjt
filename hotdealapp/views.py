@@ -34,5 +34,5 @@ def index(request):
         'datas': None,
         'weather': weather_data,
     }
-    print(weather_data)
+
     return render(request, 'hotdealapp/index.html', context)

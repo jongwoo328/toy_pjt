@@ -1,3 +1,5 @@
+# from pprint import pprint
+
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
@@ -29,18 +31,18 @@ def get_article_id_ppmp(data):
     url = data.attrs["href"]
     return ppmp_base_url + url
 
-def get_fmk(target=2, key="만두"):
+def get_fmk(target='1', key="만두"):
     '''
     target : 검색범위
-        1 = title : 제목
-        2 = title_content : 제목 + 내용 (default)
+        '1' = title_content : 제목 + 내용 (default)
+        '2' = title : 제목
     key : 검색어
         default = 만두
     '''
     
     base_url = "https://www.fmkorea.com/?vid=&mid=hotdeal&category=&listStyle=webzine&"
     keyword = key
-    if target == 1:
+    if target == '2':
         target = "title"
     else:
         target = "title_content"
@@ -95,18 +97,18 @@ def get_fmk(target=2, key="만두"):
 
     return result
 
-def get_ppmp(target=2, key="만두"):
+def get_ppmp(target='1', key="만두"):
     '''
     target : 검색범위
-        1 = subject : 제목
-        2 = sub_memo : 제목 + 내용 (default)
+        '1' = sub_memo : 제목 + 내용 (default)
+        '2' = subject : 제목
     key : 검색어
         default = 만두
     '''
 
     base_url = "http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&page_num=20&category="
     keyword = key
-    if target == 1:
+    if target == '2':
         target = "subject"
     else:
         target = "sub_memo"
