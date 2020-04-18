@@ -1,4 +1,4 @@
-# from pprint import pprint
+from pprint import pprint
 
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -32,20 +32,9 @@ def get_article_id_ppmp(data):
     return ppmp_base_url + url
 
 def get_fmk(key="만두"):
-    '''
-    target : 검색범위
-        '1' = title_content : 제목 + 내용 (default)
-        '2' = title : 제목
-    key : 검색어
-        default = 만두
-    '''
     
     base_url = "https://www.fmkorea.com/?vid=&mid=hotdeal&category=&listStyle=webzine&"
     keyword = key
-    # if target == '2':
-    #     target = "title"
-    # else:
-    #     target = "title_content"
 
     # html parsing
     url = "{}search_keyword={}&search_target=title".format(base_url, keyword)
@@ -98,22 +87,10 @@ def get_fmk(key="만두"):
     return result
 
 def get_ppmp(key="만두"):
-    '''
-    target : 검색범위
-        '1' = sub_memo : 제목 + 내용 (default)
-        '2' = subject : 제목
-    key : 검색어
-        default = 만두
-    '''
 
     base_url = "http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&page_num=20&category="
     keyword = key
-    # if target == '2':
-    #     target = "subject"
-    # else:
-    #     target = "sub_memo"
-    
-    # html parsing
+
     url = base_url + "&search_type=subject" + f"&keyword={keyword}"
     request = requests.get(url)
     parsed_data = BeautifulSoup(request.text, "html.parser")
@@ -124,7 +101,7 @@ def get_ppmp(key="만두"):
 
     # title_list 저장, 만료여부 테스트
     valid_title_idx = []
-    title_list = list(parsed_data.select("font.list_title"))
+    title_list = list(parsed_data.select("td[valign='middle'] > a > font"))
     title_list = list(map(lambda x: x.text ,title_list))
 
     today_date = datetime.today()
@@ -158,6 +135,60 @@ def get_ppmp(key="만두"):
         })
     
     return result
+
+
+
+
+def get_ruliweb(key="만두"):
+    
+    base_url = "https://bbs.ruliweb.com/ps/board/1020?search_type=subject&search_key="
+    keyword = key
+
+    url = base_url + keyword
+    request = requests.get(url)
+    parsed_data = BeautifulSoup(request.text, "html.parser")
+
+    # date_list
+    n = len(parsed_data.select("tr.notice"))
+    b = len(parsed_data.select("tr.best"))
+    date_list = parsed_data.select("td.time")[n+b:]
+    date_list = list(map(lambda x: x.text.strip(), date_list))
+    
+    # title_list, link_list, validation
+    title_link_list = parsed_data.select("td.subject > div.relative > a.deco")
+    title_list = []
+    link_list = []
+    for data in title_link_list:
+        title_list.append(data.text)
+        link_list.append(data.attrs["href"])
+    
+    valid_title_idx = []
+    today_date = datetime.today()
+
+    for idx, data in enumerate(title_list):
+        if "품절" not in data and "종료" not in data:
+            try:
+                article_date = today_date - datetime.strptime(date_list[idx], "%Y.%m.%d")
+            except ValueError:
+                article_date = today_date - today_date
+            
+            if article_date < timedelta(days=days_delta):
+                valid_title_idx.append(idx)
+
+    result = []
+    for i in valid_title_idx:
+        try:
+            date = datetime.strptime(date_list[i], "%Y.%m.%d").strftime("%Y-%m-%d")
+        except ValueError:
+            date = date_list[i]
+        result.append({
+            "title": title_list[i],
+            "link": link_list[i],
+            "date": date
+        })
+
+    return result
+
 
 def weather():
     weather_url = f'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid={apikey.get_weather_api_id()}&lang=kr'
@@ -199,5 +230,3 @@ def weather():
     }
 
     return dict_weather
-
-weather()

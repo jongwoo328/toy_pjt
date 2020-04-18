@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import HotdealForm
-from .data import get_fmk, get_ppmp, weather
+from .data import get_fmk, get_ppmp, get_ruliweb, weather
 
 # import time
 # t = time.localtime()
@@ -18,11 +18,13 @@ def index(request):
             # target = request.POST['target']
             fmk_datas = get_fmk(key=key)
             ppmp_datas = get_ppmp(key=key)
+            ruliweb_datas = get_ruliweb(key=key)
             context = {
                 'form': form,
                 'datas': 1,
                 'fmk_datas': fmk_datas,
                 'ppmp_datas': ppmp_datas,
+                'ruliweb_datas': ruliweb_datas,
             }
             return render(request, 'hotdealapp/index.html', context)
     else:
