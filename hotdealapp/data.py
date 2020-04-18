@@ -31,7 +31,7 @@ def get_article_id_ppmp(data):
     url = data.attrs["href"]
     return ppmp_base_url + url
 
-def get_fmk(target='1', key="만두"):
+def get_fmk(key="만두"):
     '''
     target : 검색범위
         '1' = title_content : 제목 + 내용 (default)
@@ -42,13 +42,13 @@ def get_fmk(target='1', key="만두"):
     
     base_url = "https://www.fmkorea.com/?vid=&mid=hotdeal&category=&listStyle=webzine&"
     keyword = key
-    if target == '2':
-        target = "title"
-    else:
-        target = "title_content"
+    # if target == '2':
+    #     target = "title"
+    # else:
+    #     target = "title_content"
 
     # html parsing
-    url = "{}search_keyword={}&search_target={}".format(base_url, keyword, target)
+    url = "{}search_keyword={}&search_target=title".format(base_url, keyword)
     request = requests.get(url)
     parsed_data = BeautifulSoup(request.text, "html.parser")
 
@@ -97,7 +97,7 @@ def get_fmk(target='1', key="만두"):
 
     return result
 
-def get_ppmp(target='1', key="만두"):
+def get_ppmp(key="만두"):
     '''
     target : 검색범위
         '1' = sub_memo : 제목 + 내용 (default)
@@ -108,13 +108,13 @@ def get_ppmp(target='1', key="만두"):
 
     base_url = "http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&page_num=20&category="
     keyword = key
-    if target == '2':
-        target = "subject"
-    else:
-        target = "sub_memo"
+    # if target == '2':
+    #     target = "subject"
+    # else:
+    #     target = "sub_memo"
     
     # html parsing
-    url = base_url + f"&search_type={target}" + f"&keyword={keyword}"
+    url = base_url + "&search_type=subject" + f"&keyword={keyword}"
     request = requests.get(url)
     parsed_data = BeautifulSoup(request.text, "html.parser")
 

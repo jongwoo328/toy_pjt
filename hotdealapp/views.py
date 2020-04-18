@@ -15,9 +15,9 @@ def index(request):
         form = HotdealForm(request.POST)
         if form.is_valid():
             key = request.POST['key']
-            target = request.POST['target']
-            fmk_datas = get_fmk(key=key, target=target)
-            ppmp_datas = get_ppmp(key=key, target=target)
+            # target = request.POST['target']
+            fmk_datas = get_fmk(key=key)
+            ppmp_datas = get_ppmp(key=key)
             context = {
                 'form': form,
                 'datas': 1,

@@ -8,7 +8,7 @@ class HotdealForm(forms.ModelForm):
     key = forms.CharField(
         label="",
         required=True,
-        widget=forms.TextInput(attrs={'name': 'key', 'placeholder': '상품 입력', 'class': 'search_input'}),
+        widget=forms.TextInput(attrs={'name': 'key', 'placeholder': '상품 입력', 'class': 'search_input', 'autocomplete': 'off'}),
     )
     # target = forms.ChoiceField(
     #     label="",
