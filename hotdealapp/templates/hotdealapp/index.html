@@ -49,9 +49,25 @@
 
 {% endblock %}
 {% block content %}
-<div class="mt-5 d-flex justify-content-center align-items-center">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" style="height: 70px; padding: 0 380px;">
+    <a href="{% url 'hotdeal:index' %}" class="navbar-brand d-flex">
+        <img src="{% static 'images/hot-deal.png' %}" height="28" alt="HotDeal">
+        <p class="mx-2 mb-0">HotDeal</p>
+    </a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ml-auto">
+            <a href="{% url 'hotdeal:index' %}" class="nav-item nav-link">Home</a>
+            <a href="#" class="nav-item nav-link">Login</a>
+        </div>
+    </div>
+</nav>
+<!-- <div class="mt-5 d-flex justify-content-center align-items-center">
     <a href="{% url 'hotdeal:index' %}"><i class="text-dark fas fa-home fa-3x"></i></a>
-</div>
+</div> -->
 <div class="container" style="margin-top: 30px; margin-bottom:30px">
     <form action="" method="post" class="d-flex flex-column justify-content-center align-items-center mt-4">
         {% csrf_token %}
@@ -70,125 +86,142 @@
 </div>
 <div class="container mt-4">
     {% if datas != None %}
-        <div class="row flex-row">
-            <section class="col">
-                <a href="https://www.fmkorea.com/?vid=&mid=hotdeal" target="_blank">
-                    <!-- 512 250 -->
-                    <img src="{% static 'images/fmk_logo.png' %}" alt="fm korea logo" class="d-block w-100 border">
-                </a>
-                {% for data in fmk_datas %}
-                <div class="card my-2">
-                    <div class="w-100" style="background-color: #508cef; height:5px"></div>
-                    <!-- <h5 class="card-header" style="background-color: #508cef;"></h5> -->
-                    <div class="card-body">
-                        <h5 class="card-title">{{ data.title }} {{ data.price }}</h5>
-                        <p class="card-text">{{ data.date }}</p>
-                        <a href="{{ data.link }}" class="btn d-block text-white" target="_blank" style="background-color: #495057;">바로가기</a>
-                    </div>
+    <div class="row flex-row">
+        <section class="col">
+            <a href="https://www.fmkorea.com/?vid=&mid=hotdeal" target="_blank">
+                <!-- 512 250 -->
+                <img src="{% static 'images/fmk_logo.png' %}" alt="fm korea logo" class="d-block w-100 border">
+            </a>
+            {% for data in fmk_datas %}
+            <div class="card my-2">
+                <div class="w-100" style="background-color: #508cef; height:5px"></div>
+                <!-- <h5 class="card-header" style="background-color: #508cef;"></h5> -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ data.title }} {{ data.price }}</h5>
+                    <p class="card-text">{{ data.date }}</p>
+                    <a href="{{ data.link }}" class="btn d-block text-white" target="_blank"
+                        style="background-color: #495057;">바로가기</a>
                 </div>
-                {% empty %}
-                <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
-                {% endfor %}
-            </section>
-        
-            
-            <section class="col">
-                <a href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu" target="_blank">
-                    <img src="{% static 'images/ppmp_logo2.png' %}" alt="ppomppu logo" class="d-block w-100 border">
-                </a>
-                {% for data in ppmp_datas %}
-                <div class="card my-2">
-                    <div class="w-100" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); height:5px;"></div>
-                    <!-- <h5 class="card-header" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080);"></h5> -->
-                    <div class="card-body ">
-                        <h5 class="card-title">{{ data.title }}</h5>
-                        <p class="card-text">{{ data.date }}</p>
-                        <a href="{{ data.link }}" class="btn d-block text-white" target="_blank" style="background-color: #495057;">바로가기</a>
-                    </div>
+            </div>
+            {% empty %}
+            <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
+            {% endfor %}
+        </section>
+
+
+        <section class="col">
+            <a href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu" target="_blank">
+                <img src="{% static 'images/ppmp_logo2.png' %}" alt="ppomppu logo" class="d-block w-100 border">
+            </a>
+            {% for data in ppmp_datas %}
+            <div class="card my-2">
+                <div class="w-100"
+                    style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); height:5px;">
                 </div>
-                {% empty %}
-                <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
-                {% endfor %}
-            </section>
-            <section class="col">
-                <a href="https://bbs.ruliweb.com/ps/board/1020" target="_blank">
-                    <img src="{% static 'images/ruliweb_logo.png' %}" alt="ruliweb logo" class="d-block w-100 border">
-                </a>
-                {% for data in ruliweb_datas %}
-                <div class="card my-2">
-                    <div class="w-100" style="background: #00349B; height:5px;"></div>
-                    <!-- <h5 class="card-header" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080);"></h5> -->
-                    <div class="card-body ">
-                        <h5 class="card-title">{{ data.title }}</h5>
-                        <p class="card-text">{{ data.date }}</p>
-                        <a href="{{ data.link }}" class="btn d-block text-white" target="_blank" style="background-color: #495057;">바로가기</a>
-                    </div>
+                <!-- <h5 class="card-header" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080);"></h5> -->
+                <div class="card-body ">
+                    <h5 class="card-title">{{ data.title }}</h5>
+                    <p class="card-text">{{ data.date }}</p>
+                    <a href="{{ data.link }}" class="btn d-block text-white" target="_blank"
+                        style="background-color: #495057;">바로가기</a>
                 </div>
-                {% empty %}
-                <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
-                {% endfor %}
-            </section>
-        </div>
+            </div>
+            {% empty %}
+            <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
+            {% endfor %}
+        </section>
+        <section class="col">
+            <a href="https://bbs.ruliweb.com/ps/board/1020" target="_blank">
+                <img src="{% static 'images/ruliweb_logo.png' %}" alt="ruliweb logo" class="d-block w-100 border">
+            </a>
+            {% for data in ruliweb_datas %}
+            <div class="card my-2">
+                <div class="w-100" style="background: #00349B; height:5px;"></div>
+                <!-- <h5 class="card-header" style="background: #40e0d0; background: -webkit-linear-gradient(to right, #40e0d0, #ff8c00, #ff0080); background: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080);"></h5> -->
+                <div class="card-body ">
+                    <h5 class="card-title">{{ data.title }}</h5>
+                    <p class="card-text">{{ data.date }}</p>
+                    <a href="{{ data.link }}" class="btn d-block text-white" target="_blank"
+                        style="background-color: #495057;">바로가기</a>
+                </div>
+            </div>
+            {% empty %}
+            <h3 class="text-center">해당하는 핫딜이 없습니다.</h3>
+            {% endfor %}
+        </section>
+    </div>
     {% else %}
     <div class="row">
-    <ul class="list-unstyled col-4 offset-4">
-        <h4 class="text-right">기준 시간 : {{ weather.current_time }}</h4>
-        <hr>
-        <li class="media">
-            <div class="media-body my-auto">
-                <h5 class="mt-0 mb-0 text-center"><span class="text-success font-weight-bold">현재</span> 구미는<br><span class="display-4">{{ weather.current_temp }} ℃</span></h5>
-            </div>
-            <img src="http://openweathermap.org/img/wn/{{ weather.current_weather }}@2x.png" class="mr-3" alt="current weather icon">
-        </li>
-        <hr>
-        <li class="media my-4">
-            <div class="media-body d-flex justify-content-between align-items-center">
-                <h5 class="mt-0 mb-0 d-inline-block"><span class="text-info">구름</span> 비율은</h5>
-                <div class="progress d-inline-block w-50">
-                    <div class="progress-bar bg-dark" role="progressbar" style="width: {{ weather.current_clouds }}%;" aria-valuenow="{{ weather.current_clouds }}" aria-valuemin="0" aria-valuemax="100">{{ weather.current_clouds }}%</div>
+        <ul class="list-unstyled col-4 offset-4">
+            <h4 class="text-right">기준 시간 : {{ weather.current_time }}</h4>
+            <hr>
+            <li class="media">
+                <div class="media-body my-auto">
+                    <h5 class="mt-0 mb-0 text-center"><span class="text-success font-weight-bold">현재</span> 구미는<br><span
+                            class="display-4">{{ weather.current_temp }} ℃</span></h5>
                 </div>
-            </div>
-        </li>
-        <hr>
-        <li class="media">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1 ">오늘<span class="text-primary"> 최저</span> 온도 : {{ weather.daily_min }} ℃</h5>
-                <h5 class="mt-0 mb-1 ">오늘<span class="text-danger"> 최고</span> 온도 : {{ weather.daily_max }} ℃</h5>
-            </div>
-            <img src="{% static 'images/temperature.png' %}" class="my-auto mr-3" alt="thermometer icon">
-        </li>
-        <hr class="mb-2">
-        <li class="media">
-            <div class="media-body">
-                <h5 class="text-center">앞으로 날씨</h5>
-                <table class="table text-center align-center">
-                    <tbody>
-                {% for data in weather.hourly_datas %}
-                    {% if forloop.counter == 1 %}
-                        <tr class="row">
-                            <th class="col">시각</th>
-                            <th class="col">온도</th>
-                            <th class="col">날씨</th>
-                            <th class="col">구름</th>
-                        </tr>
-                    {% else %}
-                      <tr class="row">
-                        <th scope="row" class="col d-flex justify-content-center align-items-center"><h5 class="mb-0">{{ data.time }}</h5></th>
-                        <td class="col align-middle d-flex justify-content-center align-items-center"><span>{{ data.temp }}°C</span></td>
-                        <td class="col align-middle d-flex justify-content-center align-items-center"><img src="http://openweathermap.org/img/wn/{{ data.weather }}@2x.png" alt="weather icon" class="w-50 text-center" align="center"></td>
-                        <td class="col text-center align-middle d-flex justify-content-center align-items-center">
-                            <div class="progress w-100">
-                            <div class="progress-bar bg-dark" style="width:{{ data.clouds }}%" role="progressbar" aria-valuenow="{{ data.clouds }}" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </td>
-                      </tr>
-                    {% endif %}
-                {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </li>
-    </ul>
+                <img src="http://openweathermap.org/img/wn/{{ weather.current_weather }}@2x.png" class="mr-3"
+                    alt="current weather icon">
+            </li>
+            <hr>
+            <li class="media my-4">
+                <div class="media-body d-flex justify-content-between align-items-center">
+                    <h5 class="mt-0 mb-0 d-inline-block"><span class="text-info">구름</span> 비율은</h5>
+                    <div class="progress d-inline-block w-50">
+                        <div class="progress-bar bg-dark" role="progressbar"
+                            style="width: {{ weather.current_clouds }}%;" aria-valuenow="{{ weather.current_clouds }}"
+                            aria-valuemin="0" aria-valuemax="100">{{ weather.current_clouds }}%</div>
+                    </div>
+                </div>
+            </li>
+            <hr>
+            <li class="media">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-1 ">오늘<span class="text-primary"> 최저</span> 온도 : {{ weather.daily_min }} ℃</h5>
+                    <h5 class="mt-0 mb-1 ">오늘<span class="text-danger"> 최고</span> 온도 : {{ weather.daily_max }} ℃</h5>
+                </div>
+                <img src="{% static 'images/temperature.png' %}" class="my-auto mr-3" alt="thermometer icon">
+            </li>
+            <hr class="mb-2">
+            <li class="media">
+                <div class="media-body">
+                    <h5 class="text-center">앞으로 날씨</h5>
+                    <table class="table text-center align-center">
+                        <tbody>
+                            {% for data in weather.hourly_datas %}
+                            {% if forloop.counter == 1 %}
+                            <tr class="row">
+                                <th class="col">시각</th>
+                                <th class="col">온도</th>
+                                <th class="col">날씨</th>
+                                <th class="col">구름</th>
+                            </tr>
+                            {% else %}
+                            <tr class="row">
+                                <th scope="row" class="col d-flex justify-content-center align-items-center">
+                                    <h5 class="mb-0">{{ data.time }}</h5>
+                                </th>
+                                <td class="col align-middle d-flex justify-content-center align-items-center">
+                                    <span>{{ data.temp }}°C</span></td>
+                                <td class="col align-middle d-flex justify-content-center align-items-center"><img
+                                        src="http://openweathermap.org/img/wn/{{ data.weather }}@2x.png"
+                                        alt="weather icon" class="w-50 text-center" align="center"></td>
+                                <td
+                                    class="col text-center align-middle d-flex justify-content-center align-items-center">
+                                    <div class="progress w-100">
+                                        <div class="progress-bar bg-dark" style="width:{{ data.clouds }}%"
+                                            role="progressbar" aria-valuenow="{{ data.clouds }}" aria-valuemin="0"
+                                            aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        </ul>
     </div>
     {% endif %}
 </div>
