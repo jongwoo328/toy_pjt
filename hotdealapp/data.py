@@ -173,10 +173,10 @@ def weather():
     # 시간별
     hourly = response.get('hourly')
     hourly_datas = []
-    for i in range(3, 25, 3):
+    for i in range(1, 25, 3):
         # 기온, 날씨, 구름양, 시간
         hourly_datas += [hourly[i].get('temp') - 273.15, hourly[i].get('weather')[0].get('icon'), hourly[i].get('clouds'), time.strftime("%H:%M:%S", time.gmtime(hourly[i].get('dt') + 32400))]
-    result = []
+    result = [0]
     for i in range(0, len(hourly_datas), 4):
         result.append({
             "temp": round(hourly_datas[i], 1),
