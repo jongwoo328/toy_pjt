@@ -1,0 +1,1 @@
+web: gunicorn hotdeal_pjt.wsgi
