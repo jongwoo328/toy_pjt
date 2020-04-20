@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import requests
 import time
 
-from . import apikey
+# from . import apikey
 
 
 fmk_base_url = "https://www.fmkorea.com"
@@ -191,7 +191,7 @@ def get_ruliweb(key="만두"):
 
 
 def weather():
-    weather_url = f'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid={apikey.get_weather_api_id()}&lang=kr'
+    weather_url = f'https://api.openweathermap.org/data/2.5/onecall?lat=36.11&lon=128.34&appid=dc6fd7a40851c1bddcb20eea52f18325&lang=kr'
     response = requests.get(weather_url).json()
     current = response.get('current')
     # 현재 온도
