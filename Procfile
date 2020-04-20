@@ -1,1 +1,1 @@
-web: gunicorn hotdeal_pjt.wsgi --log-file -
+web: gunicorn hotdeal.wsgi --log-file -
