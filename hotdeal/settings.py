@@ -32,7 +32,7 @@ MIDDLEWARE = [
 ]
 
 # Activate Django-Heroku
-django_heroku.settings(locals())
+django-heroku.settings(locals())
 
 # Application definition
 
