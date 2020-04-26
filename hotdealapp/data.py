@@ -13,24 +13,6 @@ ppmp_base_url = "http://www.ppomppu.co.kr/zboard/"
 
 days_delta = 5
 
-def get_title_fmk(title):
-    title = str(title.text)
-    for i in range(len(title)-1, -1, -1):
-        if title[i] == "[":
-            idx = i
-            break
-    return title[:i].strip()
-
-def get_article_id_fmk(data):
-    url = data.attrs["href"]
-    result = url.split("document_srl=")
-    result = result[1].split("&")[0]
-    return fmk_base_url + "/" + result
-
-def get_article_id_ppmp(data):
-    url = data.attrs["href"]
-    return ppmp_base_url + url
-
 def get_fmk(key="만두"):
     
     today_date = datetime.today()
@@ -45,21 +27,27 @@ def get_fmk(key="만두"):
     
     article_list = parsed_data.select("div.fm_best_widget li")
 
+    today_date = datetime.today()
     result = []
     for article in article_list:
+        is_ended = article.select_one("h3.title > a")
+        if is_ended != None and is_ended.attrs['class'] == ' hotdeal_var8Y':
+            continue
         date = article.select("span.regdate")[0].text.strip()
+
         try:
-            date = datetime.strptime(date, "%Y.%m.%d").strftime("%Y-%m-%d")
+            date = datetime.strptime(date, "%Y.%m.%d").strftime("%y-%m-%d")
         except ValueError:
             pass
 
         try:
-            article_date = today_date - datetime.strptime(date, "%Y.%m.%d")
+            article_date = today_date - datetime.strptime(date, "%y-%m-%d")
         except ValueError:
             article_date = today_date - today_date
 
+
         if article_date >= timedelta(days=days_delta):
-            continue
+            break
 
         title = article.select("h3")[0].text.strip()
         index = title.rfind("[")
@@ -72,12 +60,13 @@ def get_fmk(key="만두"):
             img = "https:" + article.select("img.thumb")[0].attrs["data-original"]
         except IndexError:
             img = None
+        
         result.append({
             "title": title,
             "link": link,
             "date": date,
             "img": img,
-            "from": 'fmk',
+            "from": '펨코',
         })
 
     return result
@@ -97,34 +86,36 @@ def get_ppmp(key="만두"):
 
     result = []
     for article in article_list:
+
         date = article.select_one("nobr.eng").text
         try:
             article_date = today_date - datetime.strptime(date, "%y/%m/%d")
         except ValueError:
             article_date = today_date - today_date
-
+            
         if article_date >= timedelta(days=days_delta):
-            continue
+            break
 
         end = article.select_one("span.list_comment2 + img")
         if end == None:
             try:
-                date = datetime.strptime(date, "%y/%m/%d").strftime("%Y-%m-%d")
+                date = datetime.strptime(date, "%y/%m/%d").strftime("%y-%m-%d")
             except ValueError:
-                date = date[:5]
+                date = datetime.strptime(date, "%H:%M")
 
             title_with_link = article.select_one("td[valign='middle'] > a")
             title = title_with_link.select_one("font").text
             link = ppmp_base_url + title_with_link.attrs['href']
 
             img = "http:" + article.select_one("img").attrs['src']
-            
+            if 'noimage' in img:
+                img = None
             result.append({
                 "title": title,
                 "link" : link,
                 "img": img,
                 "date": date,
-                "from": "ppmp",
+                "from": "뽐뿌",
             })
     
     return result
@@ -148,6 +139,7 @@ def get_ruliweb(key="만두"):
     result = []
     for article in articles:
         date = article.select_one("td.time").text.strip()
+
         try:
             article_date = today_date - datetime.strptime(date, "%Y.%m.%d")
         except ValueError:
@@ -164,16 +156,16 @@ def get_ruliweb(key="만두"):
         img = None
 
         try:
-            date = datetime.strptime(date, "%Y.%m.%d").strftime("%Y-%m-%d")
+            date = datetime.strptime(date, "%Y.%m.%d").strftime("%y-%m-%d")
         except ValueError:
             pass
-            
+        
         result.append({
             "title": title,
             "link": link,
             "img": img,
             "date": date,
-            "from": "ruliweb",
+            "from": "루리웹",
         })
 
     return result
