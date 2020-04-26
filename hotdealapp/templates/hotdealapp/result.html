@@ -2,57 +2,78 @@
 {% load static %}
 {% block content %}
 
-<nav class="navbar navbar-expand-md navbar-dark d-flex justify-content-center mt-4" style="height: 70px; padding: 0 380px;">
+<nav class="navbar navbar-expand-md navbar-dark d-flex justify-content-center mt-4"
+    style="height: 70px; padding: 0 380px;">
     <div class="container d-flex justify-content-center">
         <form action="" method="post" class="d-flex flex-column justify-content-center align-items-center">
             {% csrf_token %}
             <div class="container h-100 d-flex justify-content-center align-items-center">
                 <div class="d-flex justify-content-center h-100">
                     <div class="searchbar d-flex justify-content-between align-items-center">
-                        {{ form }}
                         <button class="bg-transparent border-0">
                             <div class="search_icon text-white text-decoration-none"><i class="fas fa-search"></i></div>
                         </button>
+                        {{ form }}
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </nav>
+<div class="row mt-3">
+    <section class="w3-margin-top col-2 ml-5">
+        <ul class="list-group d-flex justify-content-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="text-center">순위</span>
+                <span class="text-center">이름</span>
+                <span class="text-center">검색수</span>
+            </li>
+            {% for rank in ranks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="badge badge-pill badge-info mr-1 text-center">{{ forloop.counter }}</span>
+                <span class="text-center">{{ rank.1 }}</span>
+                <span class="badge badge-primary badge-pill ml-1 text-center">{{ rank.0 }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
 
-<section class="w3-margin-top">
-    <div class="container">
-    <table class="w3-table-all w3-hoverable" id="result">
-        <thead>
-          <tr class="w3-light-grey">
-            <th></th>
-            <th class="w3-center">제목</th>
-            <th class="w3-center">시간</th>
-          </tr>
-        </thead>
-        {% for result in results %}
-        <tr>
-            <td><a href="{{ result.link }}" target="_blank">
-            {% if result.img == None %} 
-            <img src="{% static 'images/no_img_64.png' %}" alt="">
-            {% else %}
-            <img src="{{ result.img }}" alt="">
-            {% endif %}
-            </a>    
-            </td>
-          <td><a href="{{ result.link }}" target="_blank">{{ result.title }}</a></td>
-          <td class="w3-center">{{ result.date }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td></td>
-            <td><h1 class="w3-center">정보가 없습니다.</h1></td>
-            <td></td>
-        </tr>
-        {% endfor %}
-      </table>
+    <section class="w3-margin-top col-9">
+        <div class="container">
+            <table class="w3-table-all w3-hoverable" id="result">
+                <thead>
+                    <tr class="w3-light-grey">
+                        <th></th>
+                        <th class="w3-center">제목</th>
+                        <th class="w3-center">시간</th>
+                    </tr>
+                </thead>
+                {% for result in results %}
+                <tr>
+                    <td><a href="{{ result.link }}" target="_blank">
+                            {% if result.img == None %}
+                            <img src="{% static 'images/no_img_64.png' %}" alt="">
+                            {% else %}
+                            <img src="{{ result.img }}" alt="">
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td><a href="{{ result.link }}" target="_blank">{{ result.title }}</a></td>
+                    <td class="w3-center">{{ result.date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td></td>
+                    <td>
+                        <h1 class="w3-center">정보가 없습니다.</h1>
+                    </td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </table>
 
-    </div>
-</section>
+        </div>
+    </section>
+</div>
 
 {% endblock %}

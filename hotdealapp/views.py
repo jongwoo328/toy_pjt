@@ -1,6 +1,14 @@
 from django.shortcuts import render, redirect
 from .forms import HotdealForm
+from .models import Hotdeal
 from .data import get_fmk, get_ppmp, get_ruliweb
+from django.db.models import Count
+
+def get_rank():
+    search_rank = []
+    for rank in Hotdeal.objects.values('key').order_by('-count', 'key').annotate(count=Count('key')):
+        search_rank.append((rank.get('count'), rank.get('key')))
+    return search_rank
 
 def index(request):
     form = HotdealForm()
@@ -15,6 +23,8 @@ def result(request):
     if request.method == "POST":
         form = HotdealForm(request.POST)
         if form.is_valid():
+            form.save()
+            ranks = get_rank()
             key = request.POST['key']
             results = []
             results += get_fmk(key=key)
@@ -24,7 +34,9 @@ def result(request):
             context = {
                 'form': form,
                 'results': sorted(results, key=lambda x: (-len(x['date']), x['date']), reverse=True),
+                'ranks': ranks
             }
             return render(request, 'hotdealapp/result.html', context)
     else:
         return redirect('hotdeal:index')
+
