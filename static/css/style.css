@@ -2,9 +2,10 @@
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
-    background-color: #353b48;
+    background-color:white;
     border-radius: 30px;
     padding: 10px;
+    border: 5px solid black;
 }
 
 .search_input {
@@ -31,6 +32,10 @@
     text-decoration: none;
 }
 
-.navbar{
-    background-color: #353b48;
+i {
+    color: #353b48;
+}
+
+body {
+    background: #353b48;
 }
