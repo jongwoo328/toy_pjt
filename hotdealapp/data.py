@@ -90,49 +90,44 @@ def get_ppmp(key="만두"):
     url = base_url + "&search_type=subject" + f"&keyword={keyword}"
     request = requests.get(url)
     parsed_data = BeautifulSoup(request.text, "html.parser")
-
-    # date_list 만들기
-    date_list = parsed_data.select("nobr.eng")
-    date_list = list(map(lambda x: x.text, date_list))
-
-    # title_list 저장, 만료여부 테스트
-    valid_title_idx = []
-    title_list = list(parsed_data.select("td[valign='middle'] > a > font"))
-    title_list = list(map(lambda x: x.text ,title_list))
-
+    
+    article_list = list(parsed_data.select('tr.list0, tr.list1'))
+    
     today_date = datetime.today()
 
-    title_data = list(parsed_data.select("td[valign='middle']"))
-    for idx, data in enumerate(title_data):
-        is_expired = data.select_one("span.list_comment2 + img")
-        if not is_expired:
-            try:
-                article_date = today_date - datetime.strptime(date_list[idx], "%y/%m/%d")
-            except ValueError:
-                article_date = today_date - today_date
-            
-            if article_date < timedelta(days=days_delta):
-                valid_title_idx.append(idx)
-
-    # link_list 저장
-    link_list = parsed_data.select("td[valign='middle'] > a")
-    link_list = list(map(get_article_id_ppmp, link_list))
-
-
     result = []
-    for i in valid_title_idx:
+    for article in article_list:
+        date = article.select_one("nobr.eng").text
         try:
-            date = datetime.strptime(date_list[i], "%y/%m/%d").strftime("%Y-%m-%d")
+            article_date = today_date - datetime.strptime(date, "%y/%m/%d")
         except ValueError:
-            date = date_list[i][:5]
-        result.append({
-            "title": title_list[i],
-            "link": link_list[i],
-            "date": date,
-        })
+            article_date = today_date - today_date
+
+        if article_date >= timedelta(days=days_delta):
+            continue
+
+        end = article.select_one("span.list_comment2 + img")
+        if end == None:
+            try:
+                date = datetime.strptime(date, "%y/%m/%d").strftime("%Y-%m-%d")
+            except ValueError:
+                date = date[:5]
+
+            title_with_link = article.select_one("td[valign='middle'] > a")
+            title = title_with_link.select_one("font").text
+            link = ppmp_base_url + title_with_link.attrs['href']
+
+            img = "http:" + article.select_one("img").attrs['src']
+            
+            result.append({
+                "title": title,
+                "link" : link,
+                "img": img,
+                "date": date,
+                "from": "ppmp",
+            })
     
     return result
-
 
 
 

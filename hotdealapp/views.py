@@ -25,7 +25,7 @@ def result(request):
             key = request.POST['key']
             results = []
             results += get_fmk(key=key)
-            # results += get_ppmp(key=key)
+            results += get_ppmp(key=key)
             # results += get_ruliweb(key=key)
             # target = request.POST['target']
             context = {
