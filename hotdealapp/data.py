@@ -139,44 +139,41 @@ def get_ruliweb(key="만두"):
     url = base_url + keyword
     request = requests.get(url)
     parsed_data = BeautifulSoup(request.text, "html.parser")
+    table = parsed_data.select_one("div.board_main.theme_default.theme_white")
+    num_notice = len(table.select("tr.inside"))
 
-    # date_list
-    n = len(parsed_data.select("tr.notice"))
-    b = len(parsed_data.select("tr.best"))
-    date_list = parsed_data.select("td.time")[n+b:]
-    date_list = list(map(lambda x: x.text.strip(), date_list))
-    
-    # title_list, link_list, validation
-    title_link_list = parsed_data.select("td.subject > div.relative > a.deco")
-    title_list = []
-    link_list = []
-    for data in title_link_list:
-        title_list.append(data.text)
-        link_list.append(data.attrs["href"])
-    
-    valid_title_idx = []
+    articles = parsed_data.select("div.board_main.theme_default.theme_white > table > tbody > tr")[num_notice:]
     today_date = datetime.today()
 
-    for idx, data in enumerate(title_list):
-        if "품절" not in data and "종료" not in data:
-            try:
-                article_date = today_date - datetime.strptime(date_list[idx], "%Y.%m.%d")
-            except ValueError:
-                article_date = today_date - today_date
-            
-            if article_date < timedelta(days=days_delta):
-                valid_title_idx.append(idx)
-
     result = []
-    for i in valid_title_idx:
+    for article in articles:
+        date = article.select_one("td.time").text.strip()
         try:
-            date = datetime.strptime(date_list[i], "%Y.%m.%d").strftime("%Y-%m-%d")
+            article_date = today_date - datetime.strptime(date, "%Y.%m.%d")
         except ValueError:
-            date = date_list[i]
+            article_date = today_date - today_date
+        
+        if article_date >= timedelta(days=days_delta):
+            break
+
+        title_with_link = article.select_one("td.subject a")
+        title = title_with_link.text.strip()
+        if "품절" in title or "종료" in title:
+            break
+        link = title_with_link.attrs['href']
+        img = None
+
+        try:
+            date = datetime.strptime(date, "%Y.%m.%d").strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+            
         result.append({
-            "title": title_list[i],
-            "link": link_list[i],
-            "date": date
+            "title": title,
+            "link": link,
+            "img": img,
+            "date": date,
+            "from": "ruliweb",
         })
 
     return result
