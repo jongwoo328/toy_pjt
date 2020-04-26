@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import HotdealForm
-from .data import get_fmk, get_ppmp, get_ruliweb, weather
+from .data import get_fmk, get_ppmp, get_ruliweb
 
 # import time
 # t = time.localtime()
@@ -23,16 +23,15 @@ def result(request):
         form = HotdealForm(request.POST)
         if form.is_valid():
             key = request.POST['key']
+            results = []
+            results += get_fmk(key=key)
+            results += get_ppmp(key=key)
+            results += get_ruliweb(key=key)
             # target = request.POST['target']
-            fmk_datas = get_fmk(key=key)
-            ppmp_datas = get_ppmp(key=key)
-            ruliweb_datas = get_ruliweb(key=key)
             context = {
                 'form': form,
                 'datas': 1,
-                'fmk_datas': fmk_datas,
-                'ppmp_datas': ppmp_datas,
-                'ruliweb_datas': ruliweb_datas,
+                'results': results,
             }
             return render(request, 'hotdealapp/result.html', context)
     else:
