@@ -12,8 +12,6 @@
         margin: 0 30px;
         width: 70px;
         height: 70px;
-        text-decoration: none;
-        outline: none;
     }
 </style>
 
@@ -30,22 +28,25 @@
             <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">
                     <div class="searchbar d-flex justify-content-between align-items-center">
-                        {{ form }}
                         <button class="bg-transparent border-0">
                             <div class="search_icon text-white text-decoration-none"><i class="fas fa-search"></i></div>
                         </button>
+                        {{ form }}
                     </div>
                 </div>
             </div>
         </form>
         <div>
-            <a href="https://www.fmkorea.com/hotdeal" target="_blank" rel="noopener noreferrer">
+            <a style="text-decoration: none;" href="https://www.fmkorea.com/hotdeal" target="_blank"
+                rel="noopener noreferrer">
                 <img class="icon" src="{% static 'images/fm.png' %}" alt="fmkorea">
             </a>
-            <a href="https://bbs.ruliweb.com/market/board/1020" target="_blank" rel="noopener noreferrer">
+            <a style="text-decoration: none;" href="https://bbs.ruliweb.com/market/board/1020" target="_blank"
+                rel="noopener noreferrer">
                 <img class="icon" src="{% static 'images/ruli.png' %}" alt="ruliweb">
             </a>
-            <a href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu" target="_blank" rel="noopener noreferrer">
+            <a style="text-decoration: none;" href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu"
+                target="_blank" rel="noopener noreferrer">
                 <img class="icon" src="{% static 'images/ppomppu.png' %}" alt="ppomppu">
             </a>
         </div>
