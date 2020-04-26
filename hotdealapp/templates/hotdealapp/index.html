@@ -5,6 +5,16 @@
     .logo {
         width: 300px;
     }
+
+    .icon {
+        border-radius: 20px;
+        border: 2px solid black;
+        margin: 0 30px;
+        width: 70px;
+        height: 70px;
+        text-decoration: none;
+        outline: none;
+    }
 </style>
 
 {% endblock %}
@@ -14,7 +24,8 @@
     style="margin-top: 30px; margin-bottom:30px; min-height: 100vh;">
     <div class="d-flex flex-column align-items-center">
         <img class="logo" src="{%static 'images/hotsearch.png' %}" alt="Hotdeal">
-        <form action="" method="post" class="d-flex flex-column justify-content-center align-items-center mt-4 mb-5">
+        <form action="{% url 'hotdeal:result' %}" method="post"
+            class="d-flex flex-column justify-content-center align-items-center mt-4 mb-5">
             {% csrf_token %}
             <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">
@@ -28,17 +39,15 @@
             </div>
         </form>
         <div>
-            <a href="http://" target="_blank" rel="noopener noreferrer">
-                <img class="icon"
-                    style="border-radius: 20px; border: 2px solid black; margin: 0 30px; width: 70px; height: 70px;"
-                    src="{% static 'images/fm.png' %}" alt="fmkorea">
+            <a href="https://www.fmkorea.com/hotdeal" target="_blank" rel="noopener noreferrer">
+                <img class="icon" src="{% static 'images/fm.png' %}" alt="fmkorea">
             </a>
-            <img class="icon"
-                style="border-radius: 20px; border: 2px solid black; margin: 0 30px; width: 70px; height: 70px;"
-                src="{% static 'images/ruli.png' %}" alt="ruliweb">
-            <img class="icon"
-                style="border-radius: 20px; border: 2px solid black; margin: 0 30px; width: 70px; height: 70px;"
-                src="{% static 'images/ppomppu.png' %}" alt="ppomppu">
+            <a href="https://bbs.ruliweb.com/market/board/1020" target="_blank" rel="noopener noreferrer">
+                <img class="icon" src="{% static 'images/ruli.png' %}" alt="ruliweb">
+            </a>
+            <a href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu" target="_blank" rel="noopener noreferrer">
+                <img class="icon" src="{% static 'images/ppomppu.png' %}" alt="ppomppu">
+            </a>
         </div>
     </div>
 </div>

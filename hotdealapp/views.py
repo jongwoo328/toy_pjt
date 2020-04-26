@@ -2,13 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import HotdealForm
 from .data import get_fmk, get_ppmp, get_ruliweb
 
-# import time
-# t = time.localtime()
-# while True:
-#     if t.tm_min % 10 == 0 and t.tm_sec == 0:
-#         data = Data()
-
-# Create your views here.
 def index(request):
     form = HotdealForm()
     context = {
