@@ -8,7 +8,7 @@
             {% csrf_token %}
             <div class="container h-100 d-flex justify-content-center align-items-center">
                 <div class="d-flex justify-content-center h-100">
-                    <div class="searchbar d-flex justify-content-between">
+                    <div class="searchbar d-flex justify-content-between align-items-center">
                         {{ form }}
                         <button class="bg-transparent border-0">
                             <div class="search_icon text-white text-decoration-none"><i class="fas fa-search"></i></div>
@@ -26,7 +26,7 @@
             <div class="card col-3 mx-1 my-1">
                 <img class="card-img-top" src="{{ result.img }}">
                 <div class="card-body">
-                  <p class="card-text">{{ result.title }}</p>
+                    <p class="card-text">{{ result.title }}</p>
                 </div>
             </div>
             {% endfor %}

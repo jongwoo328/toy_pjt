@@ -2,14 +2,13 @@
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
-    background-color:white;
-    border-radius: 30px;
+    background-color:#2b303b;
+    border-radius: 8px;
     padding: 10px;
-    border: 5px solid black;
 }
 
 .search_input {
-    color: #353b48;
+    color: #65737e;
     border: 0;
     outline: 0;
     background: none;
@@ -33,9 +32,9 @@
 }
 
 i {
-    color: #353b48;
+    color: #65737e;
 }
 
 body {
-    background: #353b48;
+    background: #343d46;
 }
