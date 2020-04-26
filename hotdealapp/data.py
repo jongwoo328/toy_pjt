@@ -135,7 +135,9 @@ def get_ruliweb(key="만두"):
 
     articles = parsed_data.select("div.board_main.theme_default.theme_white > table > tbody > tr")[num_notice:]
     today_date = datetime.today()
-
+    if articles[0].select_one("p.empty_result") != None:
+        return []
+        
     result = []
     for article in articles:
         date = article.select_one("td.time").text.strip()
