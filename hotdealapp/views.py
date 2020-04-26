@@ -23,8 +23,7 @@ def result(request):
             # target = request.POST['target']
             context = {
                 'form': form,
-                'datas': 1,
-                'results': results,
+                'results': sorted(results, key=lambda x: (-len(x['date']), x['date']), reverse=True),
             }
             return render(request, 'hotdealapp/result.html', context)
     else:

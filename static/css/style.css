@@ -38,3 +38,12 @@ i {
 body {
     background: #343d46;
 }
+
+#result td{
+    vertical-align:middle;
+}
+
+#result img{
+    width: 70px;
+    height: 50px;
+}

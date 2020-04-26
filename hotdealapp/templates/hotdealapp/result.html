@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<nav class="navbar navbar-expand-md navbar-dark d-flex justify-content-center" style="height: 70px; padding: 0 380px;">
+<nav class="navbar navbar-expand-md navbar-dark d-flex justify-content-center mt-4" style="height: 70px; padding: 0 380px;">
     <div class="container d-flex justify-content-center">
         <form action="" method="post" class="d-flex flex-column justify-content-center align-items-center">
             {% csrf_token %}
@@ -19,18 +19,39 @@
         </form>
     </div>
 </nav>
-<section>
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            {% for result in results %}
-            <div class="card col-3 mx-1 my-1">
-                <img class="card-img-top" src="{{ result.img }}">
-                <div class="card-body">
-                    <p class="card-text">{{ result.title }}</p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+
+<section class="w3-margin-top">
+    <div class="container">
+    <table class="w3-table-all w3-hoverable" id="result">
+        <thead>
+          <tr class="w3-light-grey">
+            <th></th>
+            <th class="w3-center">제목</th>
+            <th class="w3-center">시간</th>
+          </tr>
+        </thead>
+        {% for result in results %}
+        <tr>
+            <td><a href="{{ result.link }}" target="_blank">
+            {% if result.img == None %} 
+            <img src="{% static 'images/no_img_64.png' %}" alt="">
+            {% else %}
+            <img src="{{ result.img }}" alt="">
+            {% endif %}
+            </a>    
+            </td>
+          <td><a href="{{ result.link }}" target="_blank">{{ result.title }}</a></td>
+          <td>{{ result.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td></td>
+            <td><h1 class="w3-center">정보가 없습니다.</h1></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+      </table>
+
     </div>
 </section>
 
