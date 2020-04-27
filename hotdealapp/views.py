@@ -5,8 +5,9 @@ from .data import get_fmk, get_ppmp, get_ruliweb
 from django.db.models import Count
 
 def get_rank():
+    rank_limit = 5
     search_rank = []
-    for rank in Hotdeal.objects.values('key').order_by('-count', 'key').annotate(count=Count('key')):
+    for rank in Hotdeal.objects.values('key').order_by('-count', 'key').annotate(count=Count('key'))[:rank_limit]:
         search_rank.append((rank.get('count'), rank.get('key')))
     return search_rank
 
