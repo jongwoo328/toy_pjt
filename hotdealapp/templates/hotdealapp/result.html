@@ -5,15 +5,15 @@
 <nav class="navbar navbar-expand-md navbar-dark d-flex justify-content-center mt-4"
     style="height: 70px; padding: 0 380px;">
     <div class="container d-flex justify-content-center">
-        <form action="" method="GET" class="d-flex flex-column justify-content-center align-items-center">
-            <!-- {% csrf_token %} -->
+        <form action="" method="post" class="d-flex flex-column justify-content-center align-items-center">
+            {% csrf_token %}
             <div class="container h-100 d-flex justify-content-center align-items-center">
                 <div class="d-flex justify-content-center h-100">
                     <div class="searchbar d-flex justify-content-between align-items-center">
                         <button class="bg-transparent border-0">
                             <div class="search_icon text-white text-decoration-none"><i class="fas fa-search"></i></div>
                         </button>
-                        <label for="key"></label><input type="text" id="key" name="key" class="search_input" autocomplete="off" value="{{ key }}">
+                        {{ form }}
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             {% for rank in ranks %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span class="badge badge-pill badge-info mr-1 text-center">{{ forloop.counter }}</span>
-                <form action="{% url 'hotdeal:result' %}"><input type="text" hidden value="{{ rank.1 }}" name="key"><span class="text-center"><button class="bg-transparent w3-border-0">{{ rank.1 }}</button></span></form>
+                <span class="text-center">{{ rank.1 }}</span>
                 <span class="badge badge-primary badge-pill ml-1 text-center">{{ rank.0 }}</span>
             </li>
             {% endfor %}

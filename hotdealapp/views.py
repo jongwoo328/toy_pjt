@@ -19,39 +19,25 @@ def index(request):
     return render(request, 'hotdealapp/index.html', context)
 
 
-# def result(request):
-#     # 데이터 불러올 로직
-#     if request.method == "POST":
-#         form = HotdealForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             ranks = get_rank()
-#             key = request.POST['key']
-#             results = []
-#             results += get_fmk(key=key)
-#             results += get_ppmp(key=key)
-#             results += get_ruliweb(key=key)
-#             # target = request.POST['target']
-#             context = {
-#                 'form': form,
-#                 'results': sorted(results, key=lambda x: (-len(x['date']), x['date']), reverse=True),
-#                 'ranks': ranks
-#             }
-#             return render(request, 'hotdealapp/result.html', context)
-#     else:
-#         return redirect('hotdeal:index')
-
 def result(request):
-    key = request.GET.get('key')
-    Hotdeal.objects.create(key=key)
-    ranks = get_rank()
-    result = []
-    result += get_fmk(key=key)
-    result += get_ppmp(key=key)
-    result += get_ruliweb(key=key)
-    context = {
-        'key': key,
-        'results': sorted(result, key=lambda x: (-len(x['date']), x['date']), reverse=True),
-        'ranks': ranks,
-    }
-    return render(request, 'hotdealapp/result.html', context)
+    # 데이터 불러올 로직
+    if request.method == "POST":
+        form = HotdealForm(request.POST)
+        if form.is_valid():
+            form.save()
+            ranks = get_rank()
+            key = request.POST['key']
+            results = []
+            results += get_fmk(key=key)
+            results += get_ppmp(key=key)
+            results += get_ruliweb(key=key)
+            # target = request.POST['target']
+            context = {
+                'form': form,
+                'results': sorted(results, key=lambda x: (-len(x['date']), x['date']), reverse=True),
+                'ranks': ranks
+            }
+            return render(request, 'hotdealapp/result.html', context)
+    else:
+        return redirect('hotdeal:index')
+
