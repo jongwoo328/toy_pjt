@@ -1,5 +1,6 @@
 *.log
 *.pot
 *.pyc
+*.sqlite3
 apikey.py
 __pycache__/
