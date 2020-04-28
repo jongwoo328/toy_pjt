@@ -107,8 +107,7 @@ def get_ppmp(key="만두"):
             try:
                 date = datetime.strptime(date, "%y/%m/%d").strftime("%y-%m-%d")
             except ValueError:
-                date = datetime(today_date.year, today_date.month, today_date.day, list_to_int(date[:2]), list_to_int(date[3:5])).strftime("%y-%m-%d")
-
+                date = datetime.strptime(date, "%H:%M")
             title_with_link = article.select_one("td[valign='middle'] > a")
             title = title_with_link.select_one("font").text
             link = ppmp_base_url + title_with_link.attrs['href']
