@@ -13,6 +13,12 @@ ppmp_base_url = "http://www.ppomppu.co.kr/zboard/"
 
 days_delta = 5
 
+def list_to_int(inputlist):
+    tmpstr = ''
+    for char in inputlist:
+        tmpstr += char
+    return int(tmpstr)
+
 def get_fmk(key="만두"):
     
     today_date = datetime.today()
@@ -27,6 +33,8 @@ def get_fmk(key="만두"):
     
     article_list = parsed_data.select("div.fm_best_widget li")
 
+    if len(article_list) == 0:
+        return []
     today_date = datetime.today()
     result = []
     for article in article_list:
@@ -82,8 +90,10 @@ def get_ppmp(key="만두"):
     
     article_list = list(parsed_data.select('tr.list0, tr.list1'))
     
+    if len(article_list) == 0:
+        return []
     today_date = datetime.today()
-
+    
     result = []
     for article in article_list:
 
@@ -101,20 +111,20 @@ def get_ppmp(key="만두"):
             try:
                 date = datetime.strptime(date, "%y/%m/%d").strftime("%y-%m-%d")
             except ValueError:
-                date = datetime.strptime(date, "%H:%M")
+                date = datetime(today_date.year, today_date.month, today_date.day, list_to_int(date[:2]), list_to_int(date[3:5])).strftime("%y-%m-%d")
 
             title_with_link = article.select_one("td[valign='middle'] > a")
             title = title_with_link.select_one("font").text
             link = ppmp_base_url + title_with_link.attrs['href']
 
-            img = "http:" + article.select_one("img").attrs['src']
+            img = "http:" + article.select_one("table img").attrs['src']
             if 'noimage' in img:
                 img = None
             result.append({
                 "title": title,
                 "link" : link,
                 "img": img,
-                "date": date,
+                "date": str(date),
                 "from": "뽐뿌",
             })
     
