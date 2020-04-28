@@ -25,8 +25,8 @@ def result(request):
     ranks = get_rank()
     result = []
     result += get_fmk(key=key)
-    result += get_ppmp(key=key)
-    result += get_ruliweb(key=key)
+    # result += get_ppmp(key=key)
+    # result += get_ruliweb(key=key)
     context = {
         'key': key,
         'results': sorted(result, key=lambda x: (-len(x['date']), x['date']), reverse=True),
