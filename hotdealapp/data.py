@@ -33,8 +33,6 @@ def get_fmk(key="만두"):
     
     article_list = parsed_data.select("div.fm_best_widget li")
 
-    if len(article_list) == 0:
-        return []
     today_date = datetime.today()
     result = []
     for article in article_list:
@@ -90,8 +88,6 @@ def get_ppmp(key="만두"):
     
     article_list = list(parsed_data.select('tr.list0, tr.list1'))
     
-    if len(article_list) == 0:
-        return []
     today_date = datetime.today()
     
     result = []
