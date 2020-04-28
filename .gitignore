@@ -3,4 +3,5 @@
 *.pyc
 *.sqlite3
 apikey.py
+hotdeal-app
 __pycache__/
