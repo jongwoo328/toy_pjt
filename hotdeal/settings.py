@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'hotdeal.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hotdeal-app',
         'USER': 'name',
         'PASSWORD': '',
