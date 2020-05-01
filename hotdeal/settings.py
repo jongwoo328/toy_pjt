@@ -28,7 +28,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = '*+xf$z%hd=(&h1062rvdclrnaydpt53)6*6gdu874m6%asocfi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 1
+DEBUG = 0
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
