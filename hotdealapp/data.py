@@ -122,7 +122,7 @@ def get_ppmp(key="만두"):
                 "date": str(date),
                 "from": "뽐뿌",
             })
-    
+
     return result
 
 
