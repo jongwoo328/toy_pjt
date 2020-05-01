@@ -4,4 +4,4 @@
 *.sqlite3
 apikey.py
 hotdeal-app
-__pycache__/
+__pycache__/.env
