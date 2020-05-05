@@ -21,13 +21,18 @@ def index(request):
 
 def result(request):
     key = request.GET.get('key')
-    Hotdeal.objects.create(key=key)
-    ranks = get_rank()
+    hotdeal = Hotdeal.objects.get(key=key)
+    if hotdeal:
+        hotdeal.cnt += 1
+        hotdeal.save()
+    else:
+        Hotdeal.objects.create(key=key)
+    # ranks = get_rank()
+    ranks = Hotdeal.objects.order_by('-cnt')
     result = []
     result += get_fmk(key=key)
     # result += get_ppmp(key=key)
     result += get_ruliweb(key=key)
-
     context = {
         'key': key,
         'results': sorted(result, key=lambda x: (-len(x['date']), x['date']), reverse=True),

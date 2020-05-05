@@ -16,3 +16,12 @@ class HotdealForm(forms.ModelForm):
     class Meta:
         model = Hotdeal
         fields = ['key']
+
+    # def save(self):
+    #     hotdeal = Hotdeal.objects.get(key=self.key)
+    #     if hotdeal:
+    #         hotdeal.count += 1
+    #     else:
+    #         hotdeal = super().save()
+    #     return hotdeal
+            
