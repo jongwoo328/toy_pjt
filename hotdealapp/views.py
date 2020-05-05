@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.db.models import Count
+from django.core.exceptions import ObjectDoesNotExist
+
 from .forms import HotdealForm
 from .models import Hotdeal
 from .data import get_fmk, get_ppmp, get_ruliweb
-from django.db.models import Count
 
 def get_rank():
     rank_limit = 5
@@ -19,13 +21,14 @@ def index(request):
     return render(request, 'hotdealapp/index.html', context)
 
 
+
 def result(request):
     key = request.GET.get('key')
-    hotdeal = Hotdeal.objects.get(key=key)
-    if hotdeal:
+    try:
+        hotdeal  = Hotdeal.objects.get(key=key)
         hotdeal.cnt += 1
         hotdeal.save()
-    else:
+    except ObjectDoesNotExist:
         Hotdeal.objects.create(key=key)
     # ranks = get_rank()
     ranks = Hotdeal.objects.order_by('-cnt')
