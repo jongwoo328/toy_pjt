@@ -20,3 +20,4 @@
 
 **[04-20]** | heroku 배포 테스트
 
+**pythonanywhere로 배포 후 종료**
